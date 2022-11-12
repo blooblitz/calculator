@@ -5,39 +5,46 @@ html, body {
     margin: 0;
 }
 .main {
-    background: rgb(10, 28, 44);
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    background: rgb(10, 28, 44);
     height: 100vh;
+    overflow: auto;
 }
 .calculator-container {
     display: flex;
     flex-direction: column;
-    background-color: rgb(10, 28, 44);
-    border: solid 4px rgb(170, 178, 192);
     height: 600px;
     width: 400px;
     max-height: 100%;
     max-width: 100%;
+    background-color: rgb(5, 19, 31);
+    border: solid 4px rgb(14, 50, 79);
     border-radius: 10px;
 }
 .display-container {
+    flex: 1;
     display: flex;
+    flex-direction: column;
+    justify-content:space-evenly;
     margin: 10px;
-    background-color: rgb(14, 50, 79);
-    flex: 1;
     border-radius: 4px;
+    background-color: rgb(14, 50, 79);
 }
-.grid-number-pad {
-    height: 60%;
-    margin: 10px;
+.line {
+    margin-left: 5px;
+    overflow: hidden;
+}
+.grid-inputs {
     flex: 1;
-    margin-top: auto;
-    /*background-color: rgb(1, 23, 46);*/
     display: grid;
     gap: 3px;
+    height: 60%;
+    margin-top: auto;
+    margin: 10px;
     padding: 5px;
+    /*background-color: rgb(1, 23, 46);*/
     /*grid-template: var(--row-height) var(--row-height) var(--row-height) var(--row-height) 
                 / auto auto auto auto;*/
 
@@ -51,11 +58,11 @@ html, body {
         ". . . equal";
 }
 .key {
-    background-color: rgb(170, 178, 192);
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 4px;
+    background-color: rgb(170, 178, 192);
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     font-size: 1.8em;
     font-weight: bolder;
@@ -73,25 +80,28 @@ html, body {
     }
     .calculator-container {
         min-height: 100%;
-        overflow: auto;
+        /*overflow: auto;*/
         margin: 0;
-        padding: 0;
-        border-radius: 0;
+        padding: 0 5px 0 5px;
         border: none;
+        border-radius: 0;
+        background-color: rgb(10, 28, 44);
     }
     .display-container {
-        margin: 0;
+        margin: 5px 0px 0px 0px;
         border-radius: 0;
+        overflow: auto;
     }
-    .grid-number-pad {
+    .grid-inputs {
         height: 50%;
         margin: 0;
+        padding: 5px 0px 5px 0px;
     }
     .key{
-        line-height: 0;
         overflow: hidden;
-        font-size: 6vmin;
         border-radius: 1vh;
+        line-height: 0;
+        font-size: 6vmin;
     }
   }
 
