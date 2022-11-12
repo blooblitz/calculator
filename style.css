@@ -4,14 +4,44 @@
 html, body {
     margin: 0;
 }
+.wrapper {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgb(10, 28, 44);
+}
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 100%;
+    background-color: gray;
+}
+.header > h1 {
+    line-height: 0;
+    margin: 0;
+    padding: 0;
+}
 .main {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: auto;
+    margin-bottom: auto;
     background: rgb(10, 28, 44);
-    height: 100vh;
     overflow: auto;
 }
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    width: 100%;
+    background-color: gray;
+}
+
 .calculator-container {
     display: flex;
     flex-direction: column;
@@ -28,7 +58,7 @@ html, body {
     display: flex;
     flex-direction: column;
     justify-content:space-evenly;
-    margin: 10px;
+    margin: 10px 10px 0px 10px;
     border-radius: 4px;
     background-color: rgb(14, 50, 79);
 }
@@ -64,7 +94,7 @@ html, body {
     border-radius: 4px;
     background-color: rgb(170, 178, 192);
     font-family:Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 1.8em;
+    font-size: 2em;
     font-weight: bolder;
     line-height: 0;
 }
@@ -74,9 +104,18 @@ html, body {
 .key[data-key="="] {
     grid-area: equal;
 }
-@media only screen and (max-height: 600px), (max-width: 400px)  {
+
+@media only screen and (max-height: 500px),
+            screen and (max-width: 500px)  {
+    .header {
+        height: 60px;
+    }
     .main {
         background: rgb(10, 28, 44);
+        height: 100%;
+    }
+    .footer{
+        display: none
     }
     .calculator-container {
         min-height: 100%;
@@ -103,6 +142,25 @@ html, body {
         line-height: 0;
         font-size: 6vmin;
     }
-  }
+}
+@media only screen and (min-height: 501px) and (max-height: 740px) {
+    .calculator-container {
+        max-height: 96%;
+        /*overflow: auto;*/
+    }
+    .display-container {
+        height: 50%;
+        overflow: auto;
+    }
+    .grid-inputs {
+        height: 50%;
+    }
+    .key{
+        overflow: hidden;
+        border-radius: 1vh;
+        line-height: 0;
+        /*font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300)));*/
+    }
+}
 
   
