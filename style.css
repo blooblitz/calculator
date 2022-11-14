@@ -9,7 +9,7 @@ html, body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: rgb(10, 28, 44);
+    background-color: rgb(87, 100, 112)
 }
 .header {
     display: flex;
@@ -17,7 +17,8 @@ html, body {
     align-items: center;
     height: 40px;
     width: 100%;
-    background-color: gray;
+    color:rgb(170, 178, 192);
+    background-color: rgb(10, 28, 44);
 }
 .header > h1 {
     line-height: 0;
@@ -30,7 +31,7 @@ html, body {
     justify-content: center;
     margin-top: auto;
     margin-bottom: auto;
-    background: rgb(10, 28, 44);
+    background: rgb(87, 100, 112);
     overflow: auto;
 }
 .footer {
@@ -39,9 +40,9 @@ html, body {
     align-items: center;
     height: 80px;
     width: 100%;
-    background-color: gray;
+    color:rgb(170, 178, 192);
+    background-color: rgb(10, 28, 44);
 }
-
 .calculator-container {
     display: flex;
     flex-direction: column;
@@ -50,7 +51,7 @@ html, body {
     max-height: 100%;
     max-width: 100%;
     background-color: rgb(5, 19, 31);
-    border: solid 4px rgb(14, 50, 79);
+    border: solid 4px rgb(10, 28, 44);
     border-radius: 10px;
 }
 .display-container {
@@ -97,9 +98,18 @@ html, body {
     font-size: 2em;
     font-weight: bolder;
     line-height: 0;
+
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	outline: inherit;
+}
+.key:active {
+    transform:scale(0.98);
+    background-color: rgb(209, 133, 27);
+
 }
 .key[data-key="1"] {
-    background-color: yellow;
 }
 .key[data-key="="] {
     grid-area: equal;
