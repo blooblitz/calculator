@@ -57,15 +57,20 @@ html, body {
 .display-container {
     flex: 1;
     display: flex;
-    flex-direction: column;
-    justify-content:space-evenly;
+    flex-direction: column-reverse;
     margin: 10px 10px 0px 10px;
     border-radius: 4px;
     background-color: rgb(14, 50, 79);
+    overflow: auto;
+
+    color: white;
+    padding: 2%;
 }
-.line {
-    margin-left: 5px;
-    overflow: hidden;
+.calc-history {
+    margin-top: auto;
+}
+.calc-current {
+    font-size: 2em;
 }
 .grid-inputs {
     flex: 1;
@@ -139,12 +144,13 @@ html, body {
     .display-container {
         margin: 5px 0px 0px 0px;
         border-radius: 0;
-        overflow: auto;
+        overflow-y: scroll;
     }
     .grid-inputs {
         height: 50%;
         margin: 0;
         padding: 5px 0px 5px 0px;
+        gap: 0.5vmin;
     }
     .key{
         overflow: hidden;
