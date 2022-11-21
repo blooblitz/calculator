@@ -180,9 +180,7 @@ function inputNumber(input) {
     Adds event listeners and sets up keys
 */
 function initialize() {
-    const keys = document.querySelectorAll(".key");
-
-    window.addEventListener("keydown", (event) => {
+    window.addEventListener("keypress", (event) => {
         event.preventDefault();
         let name = event.key;
         if (name >= 0 && name <= 9) inputNumber(name);
