@@ -9,8 +9,12 @@ From [The Odin Project](https://www.theodinproject.com/courses/foundations/lesso
 * CSS
 * Javascript
 
+## Notes
+Order of operations is not (yet) supported. Per the project specifications, the calculator operates on a single pair of numbers at a time, as they are entered.
+
 ## TO-DO
- Fix delete button behavior with deleting decimals. Clean up behavior when doing math on floats. Make a little more visually appealing. Add operation history in display. Clean up/refactor code.
+  * Make a little more visually appealing. 
+  * Disable decimal button if one in display
 
 **Blooblitz**
 * GitHub: [Bloobliz](https://github.com/blooblitz/)

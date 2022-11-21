@@ -1,3 +1,10 @@
+/*
+    Author: Blooblitz
+    Date: 2022
+
+    Calculator app for The Odin Project
+*/
+
 let currentDisplay = document.querySelector(".calc-current");
 let historicDisplay = document.querySelector(".calc-history");
 let resetDisplay = false;
@@ -16,13 +23,14 @@ const Calculator = {
     memory: "",
     justPressedEqual: false,
     justPressedOperant: false,
+    justPressedDecimal: false,
     add: function (x, y) {
         let result = +x + +y; // +x converts strings to numbers
         return isNaN(result) ? "Error: Not a number" : result;
     },
     subtract: function (x, y) {
         let result = +x - +y;
-        return isNaN(result) ? "Error: Not a number" : result;
+        return isNaN(result) ? "Error: Not a number" : Math.round((result + Number.EPSILON) * 100) / 100;
     },
     multiply: function (x, y) {
         let result = +x * +y;
@@ -30,13 +38,13 @@ const Calculator = {
     },
     divide: function (x, y) {
         let result = +x / +y;
-        return isNaN(result) ? "Error: Not a number" : result;
+        //This will round the number to 2 decimal places and ensure correct rounding.
+        return isNaN(result) ? "Error: Not a number" : Math.round((result + Number.EPSILON) * 100) / 100;
     },
     clear: function () {
 
     },
 };
-
 
 /*
     Operate function that takes an operand and two variables, and calls
@@ -56,14 +64,11 @@ function operate(operant, x, y) {
 }
 
 /*
-    When a button is pressed this function calls a function to do operations, and
-    another function to update the display.
+    When a button is pressed this function calls a function to do operations and update the display.
 */
 function buttonPress(e) {
     update(e.dataset.key);
-    updateDisplay(e.dataset.key);
-
-    console.log(Calculator.previousOperand + " " + Calculator.currentOperand + " " + Calculator.operant);
+    //console.log(Calculator.previousOperand + " " + Calculator.currentOperand + " " + Calculator.operant);
 };
 
 /*
@@ -72,72 +77,120 @@ function buttonPress(e) {
 */
 function update(input) {
     if(input === "=") {
-        Calculator.result = operate(Calculator.operant, Calculator.previousOperand, Calculator.currentOperand);
-        Calculator.previousOperand = 0;
-        Calculator.currentOperand = 0;
-        Calculator.operant = "+";
-        Calculator.justPressedEqual = true;
-    } 
-    else if (input === "+" || input === "-" || input === "*" || input === "/") {
-        Calculator.justPressedOperant = true;
-        if (Calculator.justPressedEqual) {      //Check if the previous button pressed was "="
-            Calculator.justPressedEqual = false;
-            Calculator.previousOperand = Calculator.result;
-        }
-        Calculator.previousOperand = operate(Calculator.operant, Calculator.previousOperand, Calculator.currentOperand);
-        Calculator.currentOperand = 0;
-        Calculator.operant = input;
-        Calculator.justPressedEqual = false;
-    } 
-    else if (input === "DEL") {
-        if (Calculator.justPressedEqual) {
-            Calculator.justPressedEqual = false;
-            Calculator.previousOperand = 0;
-        }
-        Calculator.currentOperand = Calculator.currentOperand.toString().substring(0, Calculator.currentOperand.length - 1);
-        console.log(Calculator.currentOperand);
+        inputEnter()
+    } else if (input === "+" || input === "-" || input === "*" || input === "/") {
+        inputOperant(input)
+    } else if (input === "DEL") {
+        inputDelete();
     } else if (input === "CLR") {
-        clear();
+        inputClear();
+    } else if (input === "+/-") {
+        inputPlusMinus();
     } else { 
-        if (Calculator.justPressedEqual) Calculator.justPressedEqual = false;
-        Calculator.currentOperand += input;
+        inputNumber(input);
     }
 }
 
 /*
-    Updates the calculator display based on input
+    Handles the enter button being pressed
 */
-function updateDisplay(input) {
-    if (input === "DEL") {
-       currentDisplay.textContent = currentDisplay.textContent.substring(0, currentDisplay.textContent.length - 1);
-    } else if (input === "CLR") {
-        currentDisplay.textContent = "";
-    } else if (input === "=") {
-        currentDisplay.textContent = Calculator.result;
-        resetDisplay = true;
-    } else if (input === "+" || input === "-" || input === "*" || input === "/") {
-        currentDisplay.textContent = Calculator.previousOperand;
-        resetDisplay = true;
+function inputEnter() {
+    Calculator.result = operate(Calculator.operant, Calculator.previousOperand, Calculator.currentOperand);
+    historicDisplay.lastChild.textContent += +Calculator.currentOperand + " = " + Calculator.result;
+    historicDisplay.appendChild(document.createElement("div"));
+    Calculator.previousOperand = 0;
+    Calculator.currentOperand = 0;
+    Calculator.operant = "+";
+    Calculator.justPressedEqual = true;
+    currentDisplay.textContent = Calculator.result;
+    resetDisplay = true;
+}
+
+/*
+    Handles the operant button being pressed
+*/
+function inputOperant(input) {
+    Calculator.justPressedOperant = true;
+    if (Calculator.justPressedEqual) {      //Check if the previous button pressed was "="
+        Calculator.justPressedEqual = false;
+        Calculator.previousOperand = Calculator.result;
+        historicDisplay.lastChild.textContent += +Calculator.previousOperand + " " + input + " ";
     } else {
-        resetDisplay ? currentDisplay.textContent = input : currentDisplay.textContent += input;
-        resetDisplay = false;
+        historicDisplay.lastChild.textContent += +Calculator.currentOperand + " " + input + " ";
     }
+    Calculator.previousOperand = operate(Calculator.operant, Calculator.previousOperand, Calculator.currentOperand);
+    Calculator.currentOperand = 0;
+    Calculator.operant = input;
+    Calculator.justPressedEqual = false;
+    currentDisplay.textContent = Calculator.previousOperand;
+    resetDisplay = true;
+}
+
+/*
+    Handles the delete button being pressed
+*/
+function inputDelete() {
+    if (Calculator.justPressedEqual) {
+        Calculator.justPressedEqual = false;
+        Calculator.previousOperand = 0;
+    }
+    Calculator.currentOperand = Calculator.currentOperand.toString().substring(0, Calculator.currentOperand.length - 1);
+    currentDisplay.textContent = currentDisplay.textContent.substring(0, currentDisplay.textContent.length - 1);
 }
 
 /*
     Resets the calculator's memory and display to the default state.
 */
-function clear() {
+function inputClear() {
     currentDisplay.textContent = "";
     Calculator.currentOperand = 0;
     Calculator.previousOperand = 0;
     Calculator.operant = "+";
-};
+    currentDisplay.textContent = "";
+    while (historicDisplay.firstChild) {
+        historicDisplay.removeChild(historicDisplay.firstChild);
+    }
+    historicDisplay.appendChild(document.createElement("div"));
+}
 
+/*
+    Flips current number to positive/negative
+*/
+function inputPlusMinus() {
+    if (Calculator.justPressedEqual) {
+        Calculator.result *= -1;
+        currentDisplay.textContent = Calculator.result;
+    } else {
+        Calculator.currentOperand *= -1;
+        currentDisplay.textContent = Calculator.currentOperand;
+    }
+}
+
+/*
+    Handles a number or decimal button being pressed
+*/
+function inputNumber(input) {
+    if (Calculator.justPressedEqual) Calculator.justPressedEqual = false;
+    Calculator.currentOperand += input;
+    resetDisplay ? currentDisplay.textContent = input : currentDisplay.textContent += input;
+    resetDisplay = false;
+}
+
+/*
+    Adds event listeners and sets up keys
+*/
 function initialize() {
     const keys = document.querySelectorAll(".key");
 
-    window.addEventListener("keydown", buttonPress)
+    window.addEventListener("keydown", (event) => {
+        event.preventDefault();
+        let name = event.key;
+        if (name >= 0 && name <= 9) inputNumber(name);
+        else if (name === "."|| name === "=" || name === "Enter") inputEnter();
+        else if (name === "Backspace" || name === "Delete") inputDelete();
+        else if (name === "+" || name === "-" || name === "*" || name === "/") inputOperant(name);
+        else if (name === "Escape") inputClear();
+      }, false);
 
 };
 
