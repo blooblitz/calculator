@@ -37,6 +37,7 @@ const Calculator = {
     },
 };
 
+
 /*
     Operate function that takes an operand and two variables, and calls
     the appropriate function from the Calculator object
@@ -61,6 +62,7 @@ function operate(operant, x, y) {
 function buttonPress(e) {
     update(e.dataset.key);
     updateDisplay(e.dataset.key);
+
     console.log(Calculator.previousOperand + " " + Calculator.currentOperand + " " + Calculator.operant);
 };
 
@@ -69,14 +71,14 @@ function buttonPress(e) {
     is updated or a calculation is run.
 */
 function update(input) {
-    if(input === "="){
+    if(input === "=") {
         Calculator.result = operate(Calculator.operant, Calculator.previousOperand, Calculator.currentOperand);
         Calculator.previousOperand = 0;
         Calculator.currentOperand = 0;
         Calculator.operant = "+";
         Calculator.justPressedEqual = true;
-        console.log(Calculator.result);
-    } else if (input === "+" || input === "-" || input === "*" || input === "/") {
+    } 
+    else if (input === "+" || input === "-" || input === "*" || input === "/") {
         Calculator.justPressedOperant = true;
         if (Calculator.justPressedEqual) {      //Check if the previous button pressed was "="
             Calculator.justPressedEqual = false;
@@ -86,8 +88,14 @@ function update(input) {
         Calculator.currentOperand = 0;
         Calculator.operant = input;
         Calculator.justPressedEqual = false;
-    } else if (input === "DEL") {
-        Calculator.currentOperand = Calculator.currentOperand.toString().substring(0, Calculator.currentOperand.length - 1) * 1;
+    } 
+    else if (input === "DEL") {
+        if (Calculator.justPressedEqual) {
+            Calculator.justPressedEqual = false;
+            Calculator.previousOperand = 0;
+        }
+        Calculator.currentOperand = Calculator.currentOperand.toString().substring(0, Calculator.currentOperand.length - 1);
+        console.log(Calculator.currentOperand);
     } else if (input === "CLR") {
         clear();
     } else { 
@@ -97,7 +105,7 @@ function update(input) {
 }
 
 /*
-
+    Updates the calculator display based on input
 */
 function updateDisplay(input) {
     if (input === "DEL") {
@@ -125,10 +133,6 @@ function clear() {
     Calculator.previousOperand = 0;
     Calculator.operant = "+";
 };
-
-
-        //resetDisplay ? (currentDisplay.textContent = key, resetDisplay = false) : currentDisplay.textContent += key;
-        
 
 function initialize() {
     const keys = document.querySelectorAll(".key");
