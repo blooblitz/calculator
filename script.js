@@ -4,7 +4,6 @@
 
     Calculator app for The Odin Project
 */
-
 let currentDisplay = document.querySelector(".calc-current");
 let historicDisplay = document.querySelector(".calc-history");
 let resetDisplay = false;
@@ -110,7 +109,13 @@ function inputEnter() {
     Handles the operant button being pressed
 */
 function inputOperant(input) {
-    Calculator.justPressedOperant = true;
+    if (Calculator.justPressedOperant) {
+        Calculator.operant = input;
+        historicDisplay.lastChild.textContent = historicDisplay.lastChild.textContent
+            .slice(0, historicDisplay.lastChild.textContent.length - 2) + input + " ";
+        return;
+    }
+
     if (Calculator.justPressedEqual) {      //Check if the previous button pressed was "="
         Calculator.justPressedEqual = false;
         Calculator.previousOperand = Calculator.result;
@@ -124,6 +129,8 @@ function inputOperant(input) {
     Calculator.justPressedEqual = false;
     currentDisplay.textContent = Calculator.previousOperand;
     resetDisplay = true;
+
+    Calculator.justPressedOperant = true;
 }
 
 /*
@@ -142,11 +149,11 @@ function inputDelete() {
     Resets the calculator's memory and display to the default state.
 */
 function inputClear() {
-    currentDisplay.textContent = "";
+    //currentDisplay.textContent = "0";
     Calculator.currentOperand = 0;
     Calculator.previousOperand = 0;
     Calculator.operant = "+";
-    currentDisplay.textContent = "";
+    currentDisplay.textContent = Calculator.previousOperand;
     while (historicDisplay.firstChild) {
         historicDisplay.removeChild(historicDisplay.firstChild);
     }
@@ -170,9 +177,10 @@ function inputPlusMinus() {
     Handles a number or decimal button being pressed
 */
 function inputNumber(input) {
+    if (Calculator.justPressedOperant) Calculator.justPressedOperant = false;
     if (Calculator.justPressedEqual) Calculator.justPressedEqual = false;
     Calculator.currentOperand += input;
-    resetDisplay ? currentDisplay.textContent = input : currentDisplay.textContent += input;
+    resetDisplay ? currentDisplay.textContent = input : currentDisplay.textContent = +Calculator.currentOperand;
     resetDisplay = false;
 }
 
@@ -180,6 +188,7 @@ function inputNumber(input) {
     Adds event listeners and sets up keys
 */
 function initialize() {
+    currentDisplay.textContent = Calculator.previousOperand;
     window.addEventListener("keypress", (event) => {
         event.preventDefault();
         let name = event.key;
