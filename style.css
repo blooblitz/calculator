@@ -118,14 +118,58 @@ html, body {
 }
 .key:active {
     transform:scale(0.98);
-    background-color: rgb(209, 133, 27);
-
-}
-.key[data-key="1"] {
+    background-color: rgb(77, 127, 153);
 }
 .key[data-key="="] {
     grid-area: equal;
+    background-color: rgb(49, 146, 109);
 }
+.key[data-key="="]:active {
+    background-color: rgb(46, 194, 108);
+}
+.key[data-key="CLR"] {
+    background-color: rgb(168, 20, 37);
+}
+.key[data-key="CLR"]:active {
+    background-color: rgb(255, 0, 0);
+}
+.key[data-key="+"] {
+    background-color: rgb(198, 132, 60);
+}
+.key[data-key="+"]:active {
+    background-color: rgb(255, 102, 0);
+}
+.key[data-key="-"] {
+    background-color: rgb(198, 132, 60);
+}
+.key[data-key="-"]:active {
+    background-color: rgb(255, 102, 0);
+}
+.key[data-key="*"] {
+    background-color: rgb(198, 132, 60);
+}
+.key[data-key="*"]:active {
+    background-color: rgb(255, 102, 0);
+}
+.key[data-key="+/-"] {
+    background-color: rgb(198, 132, 60);
+}
+.key[data-key="+/-"]:active {
+    background-color: rgb(255, 102, 0);
+}
+.key[data-key="/"] {
+    background-color: rgb(198, 132, 60);
+}
+.key[data-key="/"]:active {
+    background-color: rgb(255, 102, 0);
+}
+.key[data-key="DEL"] {
+    background-color: rgb(198, 132, 60);
+}
+.key[data-key="DEL"]:active {
+    background-color: rgb(255, 102, 0);
+}
+
 
 @media only screen and (max-height: 500px),
             screen and (max-width: 500px)  {
