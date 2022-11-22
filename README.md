@@ -17,4 +17,4 @@ Order of operations is not (yet) supported. Per the project specifications, the 
   * Disable decimal button if one in display
 
 **Blooblitz**
-* GitHub: [Blooblitz](https://github.com/blooblitz/)
+* GitHub: [Blooblitz](https://blooblitz.github.io/calculator/)
